@@ -24,8 +24,7 @@ namespace SfxAppPool
         }
         public static bool CreateAppPool7(string appPoolName)
         {
-            try
-            {
+          
                 ServerManager sm = new ServerManager();
                 //判断是否存在应用程序池
                 ApplicationPool appPool = sm.ApplicationPools[appPoolName];
@@ -54,22 +53,17 @@ namespace SfxAppPool
                         | RecyclingLogEventOnRecycle.Time;
                     apppool.ProcessModel.IdleTimeout = TimeSpan.FromMinutes(0);
                     apppool.Failure.RapidFailProtection = false;
+                    apppool.AutoStart = true;
                     sm.CommitChanges();
-                    if (apppool.State == ObjectState.Stopped)
-                    {
-                        appPool.Start();
-                    }
+                 
                     return true;
                 }
                 else
                 {
                     return false;
                 }
-            }
-            catch
-            {
-                throw;
-            }
+            
+            
         }
     }
 }
